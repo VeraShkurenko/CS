@@ -5,10 +5,22 @@
 using namespace std;
 
 bool ISPAL(_TCHAR* str) {
-	for ( i = 0; i < _ts; i++)
-	{
+	int l = 0;
+	int r = _tcsclen(str) - 1;
 
+	for (int i = 0; i < _tcsclen(str)-1; i++)
+	{
+		if (str[l]==str[r])
+		{
+			l++;
+			r--;
+		}
+		else
+		{
+			return false;
+		}
 	}
+	return true;
 
 }
 
@@ -21,5 +33,6 @@ void main()
 	//cout << "The size of array: " << sizeof(szbuf3) << "bytes]n";
 
 	_TCHAR str[10] = _TEXT("bob");
+	wcout << ISPAL(str) << endl;
 
 }
