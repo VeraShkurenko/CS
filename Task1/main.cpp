@@ -1,38 +1,55 @@
-#define _CAT_SECURE_N0_WARNING
-#include <iostream>
 #include <tchar.h>
-
+#include "resource.h"
+#include <iostream>
+#include <fstream>
 using namespace std;
 
-bool ISPAL(_TCHAR* str) {
-	int l = 0;
-	int r = _tcsclen(str) - 1;
+BOOL CALLBACK DlgProc(HWND, UINT, WPARAM, LPARAM);
 
-	for (int i = 0; i < _tcsclen(str)-1; i++)
-	{
-		if (str[l]==str[r])
-		{
-			l++;
-			r--;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	return true;
-
+int WINAPI _tWinMain(HINSTANCE h, HINSTANCE p, LPTSTR l, int s)
+{
+    return DialogBox(h, MAKEINTRESOURCE(IDD_DIALOG1), NULL, (DLGPROC)DlgProc);
 }
 
-
-void main()
+BOOL CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	//_TCHAR szbuf3[15] = _TEXT("Hello,");
-	//_tcscat(szbuf3, _TEXT("world!"));
-	//wcout << szbuf3 << '\n';
-	//cout << "The size of array: " << sizeof(szbuf3) << "bytes]n";
-
-	_TCHAR str[10] = _TEXT("bob");
-	wcout << ISPAL(str) << endl;
-
+    switch (msg)
+    {
+    case WM_INITDIALOG:
+        CheckRadioButton(hWnd, IDC_RADIO_TEXT, IDC_RADIO_BINARY, IDC_RADIO_TEXT);
+        return TRUE;
+    case WM_COMMAND:
+        if (wParam == IDC_BUTTON_SAVE)
+        {
+            TCHAR buf[1024];
+            GetDlgItemText(hWnd, IDC_EDIT1, buf, 1024);
+#ifdef UNICODE
+            wstring ws(buf);
+            string str(ws.begin(), ws.end());
+#else
+            string str = buf;
+#endif
+            if (IsDlgButtonChecked(hWnd, IDC_RADIO_TEXT) == BST_CHECKED)
+            {
+                ofstream f("output.txt");
+                f << str;
+                f.close();
+            }
+            else
+            {
+                ofstream f("output.bin", ios::binary);
+                f.write(str.c_str(), str.size());
+                f.close();
+            }
+        }
+        else if (wParam == IDC_BUTTON_EXIT)
+        {
+            EndDialog(hWnd, 0);
+        }
+        return TRUE;
+    case WM_CLOSE:
+        EndDialog(hWnd, 0);
+        return TRUE;
+    }
+    return FALSE;
 }
