@@ -24,17 +24,17 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cpp-clickcount.h">
+    <ClInclude Include="cppcritical.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cppclickcount.cpp">
+    <ClCompile Include="cppcritical.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="cpp-clickcount.rc">
+    <ResourceCompile Include="cppcritical.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -42,7 +42,7 @@
     <Image Include="small.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="cpp-clickcount.ico">
+    <Image Include="cppcritical.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
